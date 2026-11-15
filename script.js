@@ -65,13 +65,13 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") updateMenuName();
   if (event.key !== "Tab" || !nav?.classList.contains("open")) return;
   const header = $(".site-header");
-  const focusables = $("a,button", header).filter((el) => el.getClientRects().length && !el.hasAttribute("disabled"));
+  const focusables = $$("a,button", header).filter((el) => el.getClientRects().length && !el.hasAttribute("disabled"));
   if (!focusables.length) return;
   const first = focusables[0], last = focusables[focusables.length - 1];
   if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
   else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
 });
-const sectionLinks = $('nav a[href^="#"]');
+const sectionLinks = $$('nav a[href^="#"]');
 const sectionTargets = sectionLinks.map((a) => document.querySelector(a.getAttribute("href")));
 function updateActiveNavigation() {
   if (!sectionLinks.length) return;
