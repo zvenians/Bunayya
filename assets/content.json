@@ -1,0 +1,64 @@
+{
+  "academicYear": "2027/2028",
+  "whatsapp": "6287888889199",
+  "campuses": [
+    {
+      "id": "bunayya-i",
+      "name": "KB–TK IT BUNAYYA I",
+      "address": "Perumahan Permata Tangerang Blok DC, Pasar Kemis, Kabupaten Tangerang",
+      "map": "https://www.google.com/maps/search/?api=1&query=Perumahan+Permata+Tangerang+Blok+DC+Pasar+Kemis"
+    },
+    {
+      "id": "bunayya-ii",
+      "name": "KB–TK IT BUNAYYA II",
+      "address": "Town House Bumi Indah Tahap V, Sukamantri, Pasar Kemis, Kabupaten Tangerang",
+      "map": "https://www.google.com/maps/search/?api=1&query=Town+House+Bumi+Indah+Tahap+V+Sukamantri+Pasar+Kemis"
+    }
+  ],
+  "tuition": {
+    "levels": {
+      "KB": [
+        {"label": "Pendaftaran", "labelEn": "Registration", "amount": 300000, "recurring": false},
+        {"label": "Sarana", "labelEn": "Facilities", "amount": 3500000, "recurring": false},
+        {"label": "KBM", "labelEn": "Learning programme", "amount": 1000000, "recurring": false},
+        {"label": "Perlengkapan", "labelEn": "Supplies", "amount": 700000, "recurring": false},
+        {"label": "Kegiatan 1 tahun", "labelEn": "One-year activities", "amount": 550000, "recurring": false},
+        {"label": "Raport", "labelEn": "Report book", "amount": 150000, "recurring": false},
+        {"label": "SPP Juli 2027 (per bulan)", "labelEn": "July 2027 tuition (monthly)", "amount": 325000, "recurring": true}
+      ],
+      "TK A": [
+        {"label": "Pendaftaran", "labelEn": "Registration", "amount": 300000, "recurring": false},
+        {"label": "Sarana", "labelEn": "Facilities", "amount": 3250000, "recurring": false},
+        {"label": "KBM", "labelEn": "Learning programme", "amount": 1000000, "recurring": false},
+        {"label": "Perlengkapan", "labelEn": "Supplies", "amount": 1400000, "recurring": false},
+        {"label": "Kegiatan 1 tahun", "labelEn": "One-year activities", "amount": 550000, "recurring": false},
+        {"label": "Raport", "labelEn": "Report book", "amount": 150000, "recurring": false},
+        {"label": "SPP Juli 2027 (per bulan)", "labelEn": "July 2027 tuition (monthly)", "amount": 325000, "recurring": true},
+        {"label": "Infaq Yanbu’a (per bulan)", "labelEn": "Yanbu’a donation (monthly)", "amount": 30000, "recurring": true}
+      ],
+      "TK B": [
+        {"label": "Pendaftaran", "labelEn": "Registration", "amount": 300000, "recurring": false},
+        {"label": "Sarana", "labelEn": "Facilities", "amount": 3000000, "recurring": false},
+        {"label": "KBM", "labelEn": "Learning programme", "amount": 1000000, "recurring": false},
+        {"label": "Perlengkapan", "labelEn": "Supplies", "amount": 1200000, "recurring": false},
+        {"label": "Kegiatan 1 tahun", "labelEn": "One-year activities", "amount": 550000, "recurring": false},
+        {"label": "Raport", "labelEn": "Report book", "amount": 150000, "recurring": false},
+        {"label": "SPP Juli 2027 (per bulan)", "labelEn": "July 2027 tuition (monthly)", "amount": 325000, "recurring": true},
+        {"label": "Infaq Yanbu’a (per bulan)", "labelEn": "Yanbu’a donation (monthly)", "amount": 30000, "recurring": true}
+      ]
+    },
+    "periods": [
+      {"id": "nov-2026", "label": "November 2026", "discount": 750000},
+      {"id": "dec-2026", "label": "Desember 2026", "labelEn": "December 2026", "discount": 500000},
+      {"id": "jan-feb-2027", "label": "Januari–Februari 2027", "labelEn": "January–February 2027", "discount": 250000},
+      {"id": "mar-jun-2027", "label": "Maret–Juni 2027", "labelEn": "March–June 2027", "discount": 0}
+    ],
+    "officialTotals": {"KB": 6525000, "TK A": 7005000, "TK B": 6555000},
+    "policies": [
+      "Potongan saudara kandung: Rp 250.000 per saudara kandung, di unit yang sama (KB–TKIT). Potongan lebih dari 1 anak kandung: Rp 250.000 per anak, di unit yang sama maupun berbeda jenjang unit.",
+      "Potongan hanya berlaku sesuai syarat dan ketentuan yang telah ditetapkan. Apabila tidak memenuhi persyaratan, potongan tidak bisa didapatkan atau dicabut hak mendapatkan potongannya.",
+      "Uang formulir yang telah dibayarkan tidak dapat dikembalikan, serta tidak dapat dialihkan untuk tahun ajar berikutnya.",
+      "Sebelum dimulainya tahun ajaran baru, biaya pendidikan akan dikembalikan satu bulan setelah tanggal konfirmasi pengunduran diri kepada Tata usaha dan dikenakan potongan sebesar 10% dari biaya yang dibayarkan (tidak termasuk uang formulir pendaftaran). Setelah dimulainya tahun ajaran baru, seluruh biaya pendidikan tidak dikembalikan."
+    ]
+  }
+}

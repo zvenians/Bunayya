@@ -1,0 +1,3 @@
+import{chromium}from'@playwright/test';import{mkdir}from'node:fs/promises';
+const browser=await chromium.launch();await mkdir('evidence/screenshots',{recursive:true});
+for(const [name,width,height]of[['desktop-1440',1440,1000],['tablet-1024',1024,900],['tablet-768',768,1024],['mobile-390',390,844],['mobile-360',360,800]]){const page=await browser.newPage({viewport:{width,height}});await page.emulateMedia({reducedMotion:'reduce'});await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>localStorage.setItem('bunayya-language','id'));await page.reload();await page.screenshot({path:`evidence/screenshots/${name}.png`,fullPage:true});await page.close()}await browser.close();
