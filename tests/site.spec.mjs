@@ -126,3 +126,67 @@ test("reduced motion does not hide reveal content", async ({ page }) => {
   await page.reload();
   await expect(page.locator(".reveal").first()).toBeVisible();
 });
+
+test("navigation is legible, mobile actions remain reachable, and custom fonts are applied", async ({ page }, testInfo) => {
+  const nav = page.locator(".site-header nav");
+  const font = await page.locator("body").evaluate(el => getComputedStyle(el).fontFamily);
+  expect(font).toContain("Plus Jakarta Sans");
+  await expect(page.locator(".site-header .brand")).toBeVisible();
+  if (testInfo.project.name.startsWith("desktop")) {
+    await expect(nav).toBeVisible();
+    await expect(nav.locator("a").first()).toBeVisible();
+  } else {
+    await expect(page.locator(".site-header .header-actions .button")).toBeVisible();
+    const layout = await page.evaluate(() => {
+      const r = s => document.querySelector(s).getBoundingClientRect();
+      const brand = r(".site-header .brand"), menu = r("[data-menu]"), actions = r(".header-actions");
+      return { brandRight: brand.right, menuLeft: menu.left, menuRight: menu.right,
+        actionsLeft: actions.left, screenWidth: innerWidth, actionsRight: actions.right };
+    });
+    expect(layout.brandRight, JSON.stringify(layout)).toBeLessThanOrEqual(layout.menuLeft + 2);
+    expect(layout.menuRight, JSON.stringify(layout)).toBeLessThanOrEqual(layout.actionsLeft + 2);
+    expect(layout.actionsRight).toBeLessThanOrEqual(layout.screenWidth + 1);
+    await page.locator("[data-menu]").click();
+    await expect(nav).toBeVisible();
+    await expect(page.locator("[data-menu]")).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator("[data-menu]")).toHaveAttribute("aria-label", /menu|navigasi/i);
+  }
+});
+
+test("hero text stays clear of carousel controls on phones", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.startsWith("desktop"));
+  const bounds = await page.evaluate(() => {
+    const stage = document.querySelector(".hero-stage");
+    const visibleSlide = [...document.querySelectorAll("[data-slide]")].find(el => !el.hidden);
+    const caption = visibleSlide.querySelector("div").getBoundingClientRect();
+    const controls = stage.querySelector(".hero-controls").getBoundingClientRect();
+    return { captionBottom: caption.bottom, controlsTop: controls.top };
+  });
+  expect(bounds.captionBottom, JSON.stringify(bounds)).toBeLessThanOrEqual(bounds.controlsTop + 2);
+});
+
+test("mobile tables expose complete information as readable cards", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.startsWith("desktop"));
+  await expect(page.locator("[data-fee-table] tr")).toHaveCount(3);
+  const styles = await page.evaluate(() => {
+    const tr = document.querySelector(".fee-table tbody tr");
+    return { display: getComputedStyle(tr).display,
+      labels: [...tr.querySelectorAll("td")].slice(1).map(td => td.dataset.label) };
+  });
+  expect(styles.display).toBe("grid");
+  expect(styles.labels.every(Boolean)).toBeTruthy();
+  await expect(page.locator(".schedule tbody tr")).toHaveCount(3);
+});
+
+test("campus mobile navigation has an accessible label", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.startsWith("desktop"));
+  for (const path of ["/bunayya-i.html", "/bunayya-ii.html"]) {
+    await page.goto(path);
+    const button = page.locator("[data-menu]");
+    await expect(button).toHaveAttribute("aria-label", /menu|navigasi/i);
+    await button.click();
+    await expect(page.locator("#nav")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(button).toHaveAttribute("aria-expanded", "false");
+  }
+});
