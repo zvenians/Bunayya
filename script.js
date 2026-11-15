@@ -38,9 +38,64 @@ menu?.addEventListener("click", () => {
   nav.classList.toggle("open", open);
   document.body.toggleAttribute("data-menu-open", open);
 });
-nav?.addEventListener("click", () => {
-  closeMenu();
+nav?.addEventListener("click", (event) => {
+  if (event.target.closest("a")) closeMenu();
 });
+const updateMenuName = () => {
+  if (!menu) return;
+  const opened = menu.getAttribute("aria-expanded") === "true";
+  menu.setAttribute("aria-label", opened
+    ? (locale === "id" ? "Tutup menu navigasi" : "Close navigation menu")
+    : (locale === "id" ? "Buka menu navigasi" : "Open navigation menu"));
+};
+menu?.addEventListener("click", updateMenuName);
+document.addEventListener("localechange", updateMenuName);
+updateMenuName();
+document.addEventListener("click", (event) => {
+  if (nav?.classList.contains("open") && !event.target.closest(".site-header")) {
+    closeMenu();
+    updateMenuName();
+  }
+});
+const desktopLayout = matchMedia("(min-width:1001px)");
+desktopLayout.addEventListener?.("change", (event) => {
+  if (event.matches) { closeMenu(); updateMenuName(); }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") updateMenuName();
+  if (event.key !== "Tab" || !nav?.classList.contains("open")) return;
+  const header = $(".site-header");
+  const focusables = $("a,button", header).filter((el) => el.getClientRects().length && !el.hasAttribute("disabled"));
+  if (!focusables.length) return;
+  const first = focusables[0], last = focusables[focusables.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+});
+const sectionLinks = $('nav a[href^="#"]');
+const sectionTargets = sectionLinks.map((a) => document.querySelector(a.getAttribute("href")));
+function updateActiveNavigation() {
+  if (!sectionLinks.length) return;
+  let active = -1;
+  sectionTargets.forEach((section, index) => {
+    if (section && section.getBoundingClientRect().top <= innerHeight * .38) active = index;
+  });
+  sectionLinks.forEach((link, index) => {
+    if (index === active) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  });
+}
+if (sectionLinks.length) {
+  let ticking = false;
+  addEventListener("scroll", () => {
+    if (!ticking) requestAnimationFrame(() => { updateActiveNavigation(); ticking = false; });
+    ticking = true;
+  }, { passive: true });
+  addEventListener("resize", updateActiveNavigation);
+  updateActiveNavigation();
+} else if (/bunayya-(i|ii)\.html$/i.test(location.pathname)) {
+  const campusLink = $('nav a[href$="#campuses"]');
+  campusLink?.setAttribute("aria-current", "location");
+}
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && nav?.classList.contains("open"))
     closeMenu({ restoreFocus: true });
@@ -374,7 +429,7 @@ function renderAdmissions() {
   )
     .map(
       ([level, total]) =>
-        `<tr><td>${level}</td><td>${rupiah(total)}</td><td>${rupiah(total - content.tuition.periods[0].discount)}</td></tr>`,
+        `<tr><td>${level}</td><td data-label="${locale === "id" ? "Biaya normal" : "Standard tuition"}">${rupiah(total)}</td><td data-label="${locale === "id" ? "Setelah potongan" : "After discount"}">${rupiah(total - content.tuition.periods[0].discount)}</td></tr>`,
     )
     .join("");
   calculate();
