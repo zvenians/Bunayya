@@ -1,0 +1,104 @@
+[
+  {
+    "id": "learning-01",
+    "src": null,
+    "alt": {
+      "id": "Placeholder dokumentasi belajar bersama",
+      "en": "Placeholder for learning together"
+    },
+    "campus": "all",
+    "category": "learning",
+    "date": null,
+    "caption": {
+      "id": "Placeholder dokumentasi pembelajaran BUNAYYA.",
+      "en": "Placeholder for BUNAYYA learning documentation."
+    },
+    "title": { "id": "Belajar bersama", "en": "Learning together" },
+    "tall": true
+  },
+  {
+    "id": "centre-01",
+    "src": null,
+    "alt": {
+      "id": "Placeholder eksplorasi sentra",
+      "en": "Placeholder for centre exploration"
+    },
+    "campus": "all",
+    "category": "learning",
+    "date": null,
+    "caption": {
+      "id": "Foto resmi akan ditambahkan setelah tersedia.",
+      "en": "Official photography will be added when available."
+    },
+    "title": { "id": "Eksplorasi sentra", "en": "Centre exploration" },
+    "tall": false
+  },
+  {
+    "id": "activity-01",
+    "src": null,
+    "alt": {
+      "id": "Placeholder kegiatan tematik",
+      "en": "Placeholder for thematic activities"
+    },
+    "campus": "all",
+    "category": "activity",
+    "date": null,
+    "caption": {
+      "id": "Placeholder, bukan foto kegiatan sebenarnya.",
+      "en": "A placeholder, not an actual activity photo."
+    },
+    "title": { "id": "Kegiatan tematik", "en": "Thematic activities" },
+    "tall": true
+  },
+  {
+    "id": "together-01",
+    "src": null,
+    "alt": {
+      "id": "Placeholder momen kebersamaan",
+      "en": "Placeholder for moments together"
+    },
+    "campus": "all",
+    "category": "activity",
+    "date": null,
+    "caption": {
+      "id": "Dokumentasi resmi menyusul.",
+      "en": "Official documentation coming soon."
+    },
+    "title": { "id": "Momen kebersamaan", "en": "Moments together" },
+    "tall": false
+  },
+  {
+    "id": "campus-01",
+    "src": null,
+    "alt": {
+      "id": "Placeholder kampus BUNAYYA I",
+      "en": "Placeholder for BUNAYYA I campus"
+    },
+    "campus": "bunayya-i",
+    "category": "campus",
+    "date": null,
+    "caption": {
+      "id": "Perumahan Permata Tangerang.",
+      "en": "Permata Tangerang residential area."
+    },
+    "title": { "id": "BUNAYYA I", "en": "BUNAYYA I" },
+    "tall": true
+  },
+  {
+    "id": "campus-02",
+    "src": null,
+    "alt": {
+      "id": "Placeholder kampus BUNAYYA II",
+      "en": "Placeholder for BUNAYYA II campus"
+    },
+    "campus": "bunayya-ii",
+    "category": "campus",
+    "date": null,
+    "caption": {
+      "id": "Town House Bumi Indah.",
+      "en": "Bumi Indah Town House."
+    },
+    "title": { "id": "BUNAYYA II", "en": "BUNAYYA II" },
+    "tall": false
+  }
+]
