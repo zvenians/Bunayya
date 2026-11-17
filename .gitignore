@@ -8,3 +8,4 @@ test-results/
 assets/photos/candidates/
 evidence/screenshots/photo-candidates.jpg
 .env*
+.vercel
