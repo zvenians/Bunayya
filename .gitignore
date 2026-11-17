@@ -3,8 +3,8 @@ node_modules/
 .vercel/
 *.log
 tmp/
-test-results/
 playwright-report/
-
-.vercel
+test-results/
+assets/photos/candidates/
+evidence/screenshots/photo-candidates.jpg
 .env*

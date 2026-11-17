@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "http-server . -p 4173 -c-1",
+    "update:youtube": "node scripts/update-youtube.mjs",
+    "optimize:photos": "node scripts/optimize-photos.mjs",
     "test": "node --test tests/data.test.mjs",
     "test:e2e": "playwright test",
     "test:all": "npm test && playwright test"

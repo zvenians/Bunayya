@@ -1,104 +1,134 @@
 [
   {
-    "id": "learning-01",
-    "src": null,
-    "alt": {
-      "id": "Placeholder dokumentasi belajar bersama",
-      "en": "Placeholder for learning together"
-    },
+    "id": "learning-guidance",
+    "src": "assets/photos/belajar-1596.jpg",
+    "alt": { "id": "Guru mendampingi dua murid BUNAYYA mengerjakan kegiatan belajar", "en": "A teacher guides two BUNAYYA pupils during a learning activity" },
     "campus": "all",
     "category": "learning",
-    "date": null,
-    "caption": {
-      "id": "Placeholder dokumentasi pembelajaran BUNAYYA.",
-      "en": "Placeholder for BUNAYYA learning documentation."
-    },
-    "title": { "id": "Belajar bersama", "en": "Learning together" },
+    "date": "2026",
+    "caption": { "id": "Pendampingan dekat memberi ruang bagi setiap anak untuk mencoba.", "en": "Close guidance gives every child room to try." },
+    "title": { "id": "Belajar dengan pendampingan", "en": "Guided learning" },
     "tall": true
   },
   {
-    "id": "centre-01",
-    "src": null,
-    "alt": {
-      "id": "Placeholder eksplorasi sentra",
-      "en": "Placeholder for centre exploration"
-    },
+    "id": "learning-independent",
+    "src": "assets/photos/belajar-1859.jpg",
+    "alt": { "id": "Seorang murid BUNAYYA mengerjakan tugas secara mandiri di meja kelas", "en": "A BUNAYYA pupil works independently at a classroom table" },
     "campus": "all",
     "category": "learning",
-    "date": null,
-    "caption": {
-      "id": "Foto resmi akan ditambahkan setelah tersedia.",
-      "en": "Official photography will be added when available."
-    },
-    "title": { "id": "Eksplorasi sentra", "en": "Centre exploration" },
+    "date": "2026",
+    "caption": { "id": "Membangun fokus dan kemandirian melalui pengalaman langsung.", "en": "Building focus and independence through hands-on experience." },
+    "title": { "id": "Berani mencoba sendiri", "en": "Confident to try" },
     "tall": false
   },
   {
-    "id": "activity-01",
-    "src": null,
-    "alt": {
-      "id": "Placeholder kegiatan tematik",
-      "en": "Placeholder for thematic activities"
-    },
+    "id": "learning-circle",
+    "src": "assets/photos/belajar-7394.jpg",
+    "alt": { "id": "Murid BUNAYYA duduk melingkar mengikuti kegiatan belajar kelompok", "en": "BUNAYYA pupils sit in a circle for a group learning activity" },
+    "campus": "all",
+    "category": "learning",
+    "date": "2026",
+    "caption": { "id": "Belajar mendengar, berbagi, dan bekerja bersama.", "en": "Learning to listen, share, and work together." },
+    "title": { "id": "Ruang belajar bersama", "en": "Learning together" },
+    "tall": false
+  },
+  {
+    "id": "swimming-practice",
+    "src": "assets/photos/berenang-7669.jpg",
+    "alt": { "id": "Anak-anak BUNAYYA berlatih berenang bersama pendamping", "en": "BUNAYYA children practise swimming with an instructor" },
     "campus": "all",
     "category": "activity",
-    "date": null,
-    "caption": {
-      "id": "Placeholder, bukan foto kegiatan sebenarnya.",
-      "en": "A placeholder, not an actual activity photo."
-    },
-    "title": { "id": "Kegiatan tematik", "en": "Thematic activities" },
+    "date": "2026",
+    "caption": { "id": "Aktivitas fisik yang aman, menyenangkan, dan membangun percaya diri.", "en": "Safe, joyful physical activity that builds confidence." },
+    "title": { "id": "Percaya diri di air", "en": "Confidence in the water" },
     "tall": true
   },
   {
-    "id": "together-01",
-    "src": null,
-    "alt": {
-      "id": "Placeholder momen kebersamaan",
-      "en": "Placeholder for moments together"
-    },
+    "id": "swimming-slide",
+    "src": "assets/photos/berenang-7594.jpg",
+    "alt": { "id": "Murid BUNAYYA bermain seluncuran air dengan pengawasan guru", "en": "BUNAYYA pupils use a water slide under teacher supervision" },
     "campus": "all",
     "category": "activity",
-    "date": null,
-    "caption": {
-      "id": "Dokumentasi resmi menyusul.",
-      "en": "Official documentation coming soon."
-    },
-    "title": { "id": "Momen kebersamaan", "en": "Moments together" },
+    "date": "2026",
+    "caption": { "id": "Kegiatan luar kelas memberi ruang untuk bergerak dan bereksplorasi.", "en": "Outdoor activities create room to move and explore." },
+    "title": { "id": "Aktif dan gembira", "en": "Active and joyful" },
     "tall": false
   },
   {
-    "id": "campus-01",
-    "src": null,
-    "alt": {
-      "id": "Placeholder kampus BUNAYYA I",
-      "en": "Placeholder for BUNAYYA I campus"
-    },
+    "id": "competition-course",
+    "src": "assets/photos/lomba-0303.jpg",
+    "alt": { "id": "Murid BUNAYYA mengikuti permainan ketangkasan di dalam ruangan", "en": "BUNAYYA pupils take part in an indoor agility game" },
+    "campus": "all",
+    "category": "activity",
+    "date": "2026",
+    "caption": { "id": "Gerak, koordinasi, dan keberanian dikembangkan lewat permainan.", "en": "Movement, coordination, and courage grow through play." },
+    "title": { "id": "Belajar lewat gerak", "en": "Learning through movement" },
+    "tall": false
+  },
+  {
+    "id": "ozone-day",
+    "src": "assets/photos/outdoor-7714.jpg",
+    "alt": { "id": "Murid dan guru BUNAYYA II memperingati Hari Ozon Internasional", "en": "BUNAYYA II pupils and teachers mark International Ozone Day" },
+    "campus": "bunayya-ii",
+    "category": "activity",
+    "date": "2026",
+    "caption": { "id": "Mengenalkan kepedulian terhadap bumi melalui kegiatan tematik.", "en": "Introducing care for the earth through a thematic activity." },
+    "title": { "id": "Peduli bumi sejak dini", "en": "Caring for the earth" },
+    "tall": true
+  },
+  {
+    "id": "ozone-group",
+    "src": "assets/photos/outdoor-8056.jpg",
+    "alt": { "id": "Kelompok murid BUNAYYA berfoto setelah kegiatan Hari Ozon", "en": "A group of BUNAYYA pupils after an Ozone Day activity" },
+    "campus": "bunayya-ii",
+    "category": "activity",
+    "date": "2026",
+    "caption": { "id": "Kebersamaan menjadi bagian dari setiap pengalaman belajar.", "en": "Togetherness is part of every learning experience." },
+    "title": { "id": "Tumbuh dalam kebersamaan", "en": "Growing together" },
+    "tall": false
+  },
+  {
+    "id": "class-community-i",
+    "src": "assets/photos/kelas-3472.jpg",
+    "alt": { "id": "Murid dan guru BUNAYYA berfoto bersama di ruang kelas", "en": "BUNAYYA pupils and teachers pose together in a classroom" },
     "campus": "bunayya-i",
     "category": "campus",
-    "date": null,
-    "caption": {
-      "id": "Perumahan Permata Tangerang.",
-      "en": "Permata Tangerang residential area."
-    },
-    "title": { "id": "BUNAYYA I", "en": "BUNAYYA I" },
+    "date": "2026",
+    "caption": { "id": "Komunitas kelas yang hangat dan saling mengenal.", "en": "A warm classroom community where everyone is known." },
+    "title": { "id": "Keluarga BUNAYYA I", "en": "BUNAYYA I community" },
+    "tall": false
+  },
+  {
+    "id": "class-community-ii",
+    "src": "assets/photos/kelas-3660.jpg",
+    "alt": { "id": "Kelompok murid BUNAYYA bersama guru di ruang kelas", "en": "A group of BUNAYYA pupils with teachers in a classroom" },
+    "campus": "bunayya-ii",
+    "category": "campus",
+    "date": "2026",
+    "caption": { "id": "Lingkungan belajar yang dibangun bersama guru dan teman.", "en": "A learning environment built with teachers and friends." },
+    "title": { "id": "Keluarga BUNAYYA II", "en": "BUNAYYA II community" },
     "tall": true
   },
   {
-    "id": "campus-02",
-    "src": null,
-    "alt": {
-      "id": "Placeholder kampus BUNAYYA II",
-      "en": "Placeholder for BUNAYYA II campus"
-    },
-    "campus": "bunayya-ii",
+    "id": "class-yellow",
+    "src": "assets/photos/kelas-satu.jpg",
+    "alt": { "id": "Murid berseragam kuning berfoto bersama guru di kelas BUNAYYA", "en": "Pupils in yellow uniforms pose with teachers in a BUNAYYA classroom" },
+    "campus": "all",
     "category": "campus",
-    "date": null,
-    "caption": {
-      "id": "Town House Bumi Indah.",
-      "en": "Bumi Indah Town House."
-    },
-    "title": { "id": "BUNAYYA II", "en": "BUNAYYA II" },
+    "date": "2026",
+    "caption": { "id": "Setiap kelas tumbuh dengan ritme dan cerita mereka sendiri.", "en": "Every class grows with its own rhythm and story." },
+    "title": { "id": "Satu kelas, banyak cerita", "en": "One class, many stories" },
+    "tall": false
+  },
+  {
+    "id": "hajj-learning",
+    "src": "assets/photos/lomba-7451.jpg",
+    "alt": { "id": "Murid BUNAYYA mengikuti kegiatan pengenalan manasik", "en": "BUNAYYA pupils take part in an introduction to Hajj practice" },
+    "campus": "all",
+    "category": "activity",
+    "date": "2026",
+    "caption": { "id": "Nilai Islam dipelajari melalui pengalaman yang dekat dengan anak.", "en": "Islamic values are learned through child-friendly experiences." },
+    "title": { "id": "Pengalaman yang berakar pada nilai", "en": "Experiences rooted in values" },
     "tall": false
   }
 ]

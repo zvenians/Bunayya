@@ -47,7 +47,7 @@ test("language switching preserves calculator state and hides inactive language"
 });
 test("gallery filters, carousel, and lightbox work", async ({ page }) => {
   await page.locator('[data-filter="learning"]').click();
-  await expect(page.locator("[data-gallery-id]")).toHaveCount(2);
+  await expect(page.locator("[data-gallery-id]")).toHaveCount(3);
   await page.locator("[data-gallery-id]").first().click();
   await expect(page.locator("[data-lightbox]")).toHaveAttribute("open", "");
   await page.keyboard.press("ArrowRight");
@@ -79,7 +79,7 @@ test("all 12 tuition combinations are correct", async ({ page }) => {
     }
 });
 test("mobile menu opens and closes", async ({ page }, testInfo) => {
-  test.skip(["desktop", "desktop-1024"].includes(testInfo.project.name));
+  test.skip(testInfo.project.name.startsWith("desktop"));
   await page.locator("[data-menu]").click();
   await expect(page.locator("#nav")).toHaveClass(/open/);
   await page.locator("#nav a").first().click();
@@ -88,7 +88,7 @@ test("mobile menu opens and closes", async ({ page }, testInfo) => {
 test("mobile menu closes with Escape and restores focus", async ({
   page,
 }, testInfo) => {
-  test.skip(["desktop", "desktop-1024"].includes(testInfo.project.name));
+  test.skip(testInfo.project.name.startsWith("desktop"));
   const button = page.locator("[data-menu]");
   await button.focus();
   await button.click();
@@ -189,4 +189,33 @@ test("campus mobile navigation has an accessible label", async ({ page }, testIn
     await page.keyboard.press("Escape");
     await expect(button).toHaveAttribute("aria-expanded", "false");
   }
+});
+
+test("latest YouTube data renders three cards and creates an iframe only after play", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  await page.route("**/assets/youtube-latest.json", route => route.fulfill({
+    contentType: "application/json",
+    body: JSON.stringify({ videos: [
+      { id: "HrK5yS7unyI", title: "Video satu", publishedAt: "2026-08-14T08:03:00Z", url: "https://youtu.be/HrK5yS7unyI", thumbnail: "https://i.ytimg.com/vi/HrK5yS7unyI/hqdefault.jpg" },
+      { id: "HssHrop8GnY", title: "Video dua", publishedAt: "2026-08-14T08:01:27Z", url: "https://youtu.be/HssHrop8GnY", thumbnail: "https://i.ytimg.com/vi/HssHrop8GnY/hqdefault.jpg" },
+      { id: "eU4f9PDEtok", title: "Video tiga", publishedAt: "2026-08-07T02:11:36Z", url: "https://youtu.be/eU4f9PDEtok", thumbnail: "https://i.ytimg.com/vi/eU4f9PDEtok/hqdefault.jpg" },
+    ] }),
+  }));
+  await page.reload();
+  await expect(page.locator(".video-card")).toHaveCount(3);
+  await expect(page.locator(".video-media iframe")).toHaveCount(0);
+  await page.locator(".video-play").first().click();
+  await expect(page.locator(".video-media iframe")).toHaveAttribute("src", /youtube-nocookie\.com/);
+});
+
+test("campus maps use the verified place identifiers", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop");
+  const maps = page.locator('[data-map-frame] iframe');
+  await expect(maps).toHaveCount(2);
+  await expect(maps.nth(0)).toHaveAttribute("src", /ChIJ_TqGBqL_aS4R4VII-RjtEOk/);
+  await expect(maps.nth(1)).toHaveAttribute("src", /ChIJE58rYpv_aS4RbqjFT5THxyA/);
+  await page.goto("/bunayya-i.html");
+  await expect(page.locator('[data-map-frame] iframe')).toHaveCount(1);
+  await page.goto("/bunayya-ii.html");
+  await expect(page.locator('[data-map-frame] iframe')).toHaveCount(1);
 });

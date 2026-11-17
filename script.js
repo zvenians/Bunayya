@@ -22,49 +22,50 @@ $("[data-language]")?.addEventListener("click", () =>
 );
 setLocale(locale);
 const menu = $("[data-menu]"),
-  nav = $("#nav");
+  nav = $("#nav"),
+  header = $(".site-header");
 let menuReturnFocus = null;
-const closeMenu = ({ restoreFocus = false } = {}) => {
-  if (!nav?.classList.contains("open")) return;
-  nav.classList.remove("open");
-  menu?.setAttribute("aria-expanded", "false");
-  document.body.removeAttribute("data-menu-open");
-  if (restoreFocus) (menuReturnFocus || menu)?.focus();
-};
-menu?.addEventListener("click", () => {
-  const open = menu.getAttribute("aria-expanded") !== "true";
+const setMenuState = (open, { restoreFocus = false } = {}) => {
+  if (!menu || !nav) return;
   if (open) menuReturnFocus = document.activeElement;
-  menu.setAttribute("aria-expanded", open);
+  menu.setAttribute("aria-expanded", String(open));
+  menu.setAttribute(
+    "aria-label",
+    open
+      ? locale === "id" ? "Tutup menu navigasi" : "Close navigation menu"
+      : locale === "id" ? "Buka menu navigasi" : "Open navigation menu",
+  );
   nav.classList.toggle("open", open);
+  header?.classList.toggle("menu-open", open);
   document.body.toggleAttribute("data-menu-open", open);
-});
-nav?.addEventListener("click", (event) => {
-  if (event.target.closest("a")) closeMenu();
-});
-const updateMenuName = () => {
-  if (!menu) return;
-  const opened = menu.getAttribute("aria-expanded") === "true";
-  menu.setAttribute("aria-label", opened
-    ? (locale === "id" ? "Tutup menu navigasi" : "Close navigation menu")
-    : (locale === "id" ? "Buka menu navigasi" : "Open navigation menu"));
+  if (open) requestAnimationFrame(() => $("a", nav)?.focus());
+  if (!open && restoreFocus) (menuReturnFocus || menu).focus();
 };
-menu?.addEventListener("click", updateMenuName);
-document.addEventListener("localechange", updateMenuName);
-updateMenuName();
+menu?.addEventListener("click", () =>
+  setMenuState(menu.getAttribute("aria-expanded") !== "true"),
+);
+nav?.addEventListener("click", (event) => {
+  if (event.target.closest("a")) setMenuState(false);
+});
+document.addEventListener("localechange", () =>
+  setMenuState(menu?.getAttribute("aria-expanded") === "true"),
+);
+setMenuState(false);
 document.addEventListener("click", (event) => {
   if (nav?.classList.contains("open") && !event.target.closest(".site-header")) {
-    closeMenu();
-    updateMenuName();
+    setMenuState(false);
   }
 });
 const desktopLayout = matchMedia("(min-width:1001px)");
 desktopLayout.addEventListener?.("change", (event) => {
-  if (event.matches) { closeMenu(); updateMenuName(); }
+  if (event.matches) setMenuState(false);
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") updateMenuName();
+  if (event.key === "Escape" && nav?.classList.contains("open")) {
+    setMenuState(false, { restoreFocus: true });
+    return;
+  }
   if (event.key !== "Tab" || !nav?.classList.contains("open")) return;
-  const header = $(".site-header");
   const focusables = $$("a,button", header).filter((el) => el.getClientRects().length && !el.hasAttribute("disabled"));
   if (!focusables.length) return;
   const first = focusables[0], last = focusables[focusables.length - 1];
@@ -73,6 +74,16 @@ document.addEventListener("keydown", (event) => {
 });
 const sectionLinks = $$('nav a[href^="#"]');
 const sectionTargets = sectionLinks.map((a) => document.querySelector(a.getAttribute("href")));
+const navIndicator = document.createElement("span");
+navIndicator.className = "nav-indicator";
+navIndicator.setAttribute("aria-hidden", "true");
+if (nav && sectionLinks.length) nav.append(navIndicator);
+function moveNavIndicator(link) {
+  if (!link || !navIndicator.isConnected) return;
+  navIndicator.style.width = `${link.offsetWidth}px`;
+  navIndicator.style.transform = `translateX(${link.offsetLeft}px)`;
+  navIndicator.hidden = false;
+}
 function updateActiveNavigation() {
   if (!sectionLinks.length) return;
   let active = -1;
@@ -83,23 +94,30 @@ function updateActiveNavigation() {
     if (index === active) link.setAttribute("aria-current", "location");
     else link.removeAttribute("aria-current");
   });
+  moveNavIndicator(sectionLinks[active]);
 }
 if (sectionLinks.length) {
   let ticking = false;
   addEventListener("scroll", () => {
-    if (!ticking) requestAnimationFrame(() => { updateActiveNavigation(); ticking = false; });
+    if (!ticking) requestAnimationFrame(() => {
+      header?.toggleAttribute("data-scrolled", scrollY > 48);
+      updateActiveNavigation();
+      ticking = false;
+    });
     ticking = true;
   }, { passive: true });
   addEventListener("resize", updateActiveNavigation);
+  header?.toggleAttribute("data-scrolled", scrollY > 48);
   updateActiveNavigation();
 } else if (/bunayya-(i|ii)\.html$/i.test(location.pathname)) {
   const campusLink = $('nav a[href$="#campuses"]');
   campusLink?.setAttribute("aria-current", "location");
 }
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && nav?.classList.contains("open"))
-    closeMenu({ restoreFocus: true });
-});
+if (!sectionLinks.length) {
+  const updateHeaderPosition = () => header?.toggleAttribute("data-scrolled", scrollY > 48);
+  addEventListener("scroll", updateHeaderPosition, { passive: true });
+  updateHeaderPosition();
+}
 $$("[data-wa]").forEach(
   (a) =>
     (a.href =
@@ -252,8 +270,13 @@ function renderGallery() {
       : { learning: "LEARNING", activity: "ACTIVITIES", campus: "CAMPUSES" };
   gallery.innerHTML = items
     .map(
-      (x, i) =>
-        `<button class="gallery-item ${x.tall ? "tall" : ""}" data-gallery-id="${x.id}" aria-label="${x.title[locale === "id" ? 0 : 1]}"><small>${String(i + 1).padStart(2, "0")} · ${categories[x.category]}</small><h3>${x.title[locale === "id" ? 0 : 1]}</h3></button>`,
+      (x, i) => {
+        const languageIndex = locale === "id" ? 0 : 1;
+        const image = x.src
+          ? `<img src="${x.src}" alt="${x.alt?.[languageIndex] || x.title[languageIndex]}" loading="lazy" width="1200" height="900">`
+          : "";
+        return `<button class="gallery-item ${x.tall ? "tall" : ""}" data-gallery-id="${x.id}" aria-label="${x.title[languageIndex]}">${image}<span class="gallery-shade"></span><small>${String(i + 1).padStart(2, "0")} · ${categories[x.category]}</small><h3>${x.title[languageIndex]}</h3></button>`;
+      },
     )
     .join("");
   $("[data-gallery-count]").textContent =
@@ -294,24 +317,24 @@ const moveGallery = (d) => {
 };
 $("[data-gallery-prev]")?.addEventListener("click", () => moveGallery(-1));
 $("[data-gallery-next]")?.addEventListener("click", () => moveGallery(1));
-let galleryTouchX = null;
-gallery?.addEventListener(
-  "touchstart",
-  (event) => {
-    galleryTouchX = event.touches[0].clientX;
-  },
-  { passive: true },
-);
-gallery?.addEventListener(
-  "touchend",
-  (event) => {
-    if (galleryTouchX === null) return;
-    const delta = event.changedTouches[0].clientX - galleryTouchX;
-    if (Math.abs(delta) > 45) moveGallery(delta < 0 ? 1 : -1);
-    galleryTouchX = null;
-  },
-  { passive: true },
-);
+let galleryScrollFrame;
+gallery?.addEventListener("scroll", () => {
+  cancelAnimationFrame(galleryScrollFrame);
+  galleryScrollFrame = requestAnimationFrame(() => {
+    const items = $$("[data-gallery-id]");
+    if (!items.length) return;
+    const index = items.reduce(
+      (best, item, candidate) =>
+        Math.abs(item.offsetLeft - gallery.scrollLeft) <
+        Math.abs(items[best].offsetLeft - gallery.scrollLeft)
+          ? candidate
+          : best,
+      0,
+    );
+    $("[data-gallery-count]").textContent =
+      `${String(index + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+  });
+}, { passive: true });
 const dialog = $("[data-lightbox]");
 function openLightbox(i) {
   lightboxIndex = i;
@@ -325,12 +348,12 @@ function paintLightbox() {
   $("[data-lightbox-index]").textContent =
     `${String(lightboxIndex + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
   $("[data-lightbox-title]").textContent = x.title[locale === "id" ? 0 : 1];
-  $("[data-lightbox-caption]").textContent =
-    x.caption[locale === "id" ? 0 : 1] +
-    " " +
-    (locale === "id"
-      ? "Tidak ada foto fiktif yang digunakan."
-      : "No fabricated photography is used.");
+  $("[data-lightbox-caption]").textContent = x.caption[locale === "id" ? 0 : 1];
+  const art = $("[data-lightbox-art]");
+  if (art)
+    art.innerHTML = x.src
+      ? `<img src="${x.src}" alt="${x.alt?.[locale === "id" ? 0 : 1] || x.title[locale === "id" ? 0 : 1]}">`
+      : "";
 }
 $("[data-lightbox-close]")?.addEventListener("click", () => dialog.close());
 $("[data-lightbox-prev]")?.addEventListener("click", () => {
@@ -388,10 +411,64 @@ fetch("assets/gallery.json")
       ...item,
       title: [item.title.id, item.title.en],
       caption: [item.caption.id, item.caption.en],
+      alt: [item.alt.id, item.alt.en],
     }));
     renderGallery();
   })
   .catch((error) => console.warn("Gallery manifest fallback in use", error));
+
+let youtubeData = null;
+const renderYouTube = () => {
+  const list = $("[data-youtube-list]");
+  if (!list) return;
+  if (!youtubeData?.videos?.length) {
+    list.innerHTML = `<p class="video-fallback">${locale === "id" ? "Cerita terbaru belum dapat dimuat. Kunjungi kanal YouTube BUNAYYA melalui tautan di bawah." : "The latest stories could not be loaded. Visit the BUNAYYA YouTube channel using the link below."}</p>`;
+    return;
+  }
+  list.innerHTML = "";
+  youtubeData.videos.slice(0, 3).forEach((video, index) => {
+    const card = document.createElement("article");
+    card.className = "video-card";
+    const published = new Intl.DateTimeFormat(locale === "id" ? "id-ID" : "en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(new Date(video.publishedAt));
+    card.innerHTML = `
+      <div class="video-media">
+        <img src="${video.thumbnail}" alt="" loading="lazy" width="480" height="270">
+        <button class="video-play" type="button" aria-label="${locale === "id" ? "Putar video" : "Play video"}: ${video.title}"><span aria-hidden="true">▶</span></button>
+      </div>
+      <div class="video-copy"><span>${String(index + 1).padStart(2, "0")} · ${published}</span><h3></h3><a href="${video.url}" target="_blank" rel="noopener">${locale === "id" ? "Tonton di YouTube" : "Watch on YouTube"} ↗</a></div>`;
+    $("h3", card).textContent = video.title;
+    $(".video-play", card).addEventListener("click", () => {
+      const media = $(".video-media", card);
+      media.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1" title="${video.title.replaceAll('"', "&quot;")}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><button class="video-close" type="button" aria-label="${locale === "id" ? "Tutup video" : "Close video"}">×</button>`;
+      $(".video-close", media).addEventListener("click", renderYouTube);
+    });
+    list.append(card);
+  });
+};
+async function initYouTube() {
+  if (!$("[data-youtube-list]")) return;
+  try {
+    const response = await fetch("assets/youtube-latest.json");
+    if (!response.ok) throw Error(`HTTP ${response.status}`);
+    youtubeData = await response.json();
+  } catch (error) {
+    console.warn("YouTube data unavailable", error);
+  }
+  renderYouTube();
+}
+document.addEventListener("localechange", renderYouTube);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && $(".video-media iframe")) renderYouTube();
+});
+initYouTube();
+
+$$('[data-map-frame] iframe').forEach((frame) => {
+  frame.addEventListener("load", () => frame.closest("[data-map-frame]")?.classList.add("is-loaded"));
+});
 
 let content;
 const rupiah = (n) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
