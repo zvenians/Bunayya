@@ -9,3 +9,11 @@ assets/photos/candidates/
 evidence/screenshots/photo-candidates.jpg
 .env*
 .vercel
+
+# Generated local screenshot evidence and caches
+evidence/screenshots/
+coverage/
+.cache/
+*.tmp
+*.bak
+Thumbs.db

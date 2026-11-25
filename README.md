@@ -27,7 +27,7 @@ npm test
 npm run test:e2e
 ```
 
-Playwright menguji desktop 1440 px, tablet 768 px, mobile 390 px dan 360 px. Bukti visual tersimpan di `evidence/screenshots/`.
+Playwright menguji desktop 1440 px, tablet 768 px, mobile 390 px dan 360 px. Untuk membuat ulang bukti visual di `evidence/screenshots/`, jalankan server lokal (`npm run serve`), lalu `node scripts/capture.mjs`. Hasil tangkapan layar bersifat sementara dan tidak disimpan dalam Git.
 
 ## Konten resmi
 
